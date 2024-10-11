@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password is required"],
     },
+    role: { type: String, default: "user" }, // Default role is 'user'
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);

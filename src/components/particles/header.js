@@ -1,7 +1,21 @@
 // components/Header.js
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/UserContext";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FaShoppingCart } from "react-icons/fa";
 
 export default function Header() {
+    const { user, logout } = useAuth();
+    const router = useRouter();
+    const { cart } = useCart();
+    const totalItems = cart.reduce((sum, product) => sum + product.quantity, 0);
+
+    const handleLogout = () => {
+        logout();
+        router.push("/"); // Redirect to home page after logout
+    };
+
     return (
         <header className="bg-white shadow-lg">
             <div className="container mx-auto flex items-center justify-between py-4 px-4">
@@ -21,15 +35,29 @@ export default function Header() {
 
                 {/* Right Side - Sign In/Up and Cart */}
                 <div className="flex items-center space-x-4">
-                    <a href="#" className="text-sm font-medium">
-                        Sign In / Sign Up
-                    </a>
-                    <a href="#" className="relative">
+                    {user ? (
+                        <>
+                            <span className="text-sm font-medium">
+                                {user.email}
+                            </span>
+                            <button
+                                onClick={handleLogout}
+                                className="text-sm font-medium"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <a href="/register" className="text-sm font-medium">
+                            Sign In / Sign Up
+                        </a>
+                    )}
+                    <Link href={"/cart"} className="relative">
                         <FaShoppingCart className="text-xl" />
                         <span className="absolute top-0 right-0 text-xs bg-red-600 text-white rounded-full px-1">
-                            3
+                            {totalItems}
                         </span>
-                    </a>
+                    </Link>
                 </div>
             </div>
 
