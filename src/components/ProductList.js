@@ -1,4 +1,5 @@
 import { useCart } from "@/contexts/CartContext";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 // components/ProductList.js
@@ -18,7 +19,7 @@ export default function ProductList() {
 
     return (
         <div className="container mx-auto py-8 px-4">
-            <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
+            <h2 className="text-2xl font-bold mb-4">Sản phẩm nổi bật</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {/* Repeat for more products */}
                 {products.map((product) => (
@@ -52,8 +53,15 @@ export default function ProductList() {
                             }}
                             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
                         >
-                            Add to Cart
+                            Thêm vào giỏ hàng
                         </button>
+
+                        <Link
+                            href={"/contact-payment"}
+                            className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+                        >
+                            Liên hệ để mua
+                        </Link>
                     </div>
                 ))}
             </div>

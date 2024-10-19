@@ -42,9 +42,9 @@ const AdminPanel = () => {
                 price: "",
                 description: "",
                 image: "bike_p8.jpg",
-            }); // Reset form
+            }); // Đặt lại biểu mẫu
         } else {
-            alert(data.message);
+            alert(data.message); // Hiển thị thông báo lỗi
         }
     };
 
@@ -65,7 +65,7 @@ const AdminPanel = () => {
         <RedirectIfNotAuthenticated>
             <div className="p-6 bg-gray-100 rounded-lg shadow-md">
                 <h1 className="text-3xl font-bold mb-6 text-center">
-                    Admin Panel
+                    Bảng điều khiển quản trị
                 </h1>
                 <button
                     onClick={logout}
@@ -75,7 +75,7 @@ const AdminPanel = () => {
                 </button>
                 <div className="mb-6">
                     <h2 className="text-xl font-semibold mb-2">
-                        Add New Product
+                        Thêm sản phẩm mới
                     </h2>
                     <div className="flex flex-col space-y-4">
                         <input
@@ -123,7 +123,9 @@ const AdminPanel = () => {
                     </div>
                 </div>
 
-                <h2 className="text-xl font-semibold mb-2">Product List</h2>
+                <h2 className="text-xl font-semibold mb-2">
+                    Danh sách sản phẩm
+                </h2>
                 {products.length > 0 ? (
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-sm text-left text-gray-500">
@@ -173,7 +175,7 @@ const AdminPanel = () => {
                         </table>
                     </div>
                 ) : (
-                    <p className="text-gray-500">No products available.</p>
+                    <p className="text-gray-500">Không có sản phẩm nào.</p>
                 )}
             </div>
         </RedirectIfNotAuthenticated>

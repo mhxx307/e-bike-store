@@ -12,7 +12,7 @@ export default function Login() {
 
     useEffect(() => {
         if (user) {
-            router.push("/admin"); // Redirect to admin if already logged in
+            router.push("/admin"); // Chuyển hướng đến trang admin nếu đã đăng nhập
         }
     }, [user, router]);
 
@@ -29,18 +29,18 @@ export default function Login() {
 
         if (res.status === 200) {
             localStorage.setItem("token", data.token);
-            localStorage.setItem("userDetails", JSON.stringify(data.user)); // Store user details
-            setUser({ token: data.token, ...data.user }); // Set user details in context
+            localStorage.setItem("userDetails", JSON.stringify(data.user)); // Lưu thông tin người dùng
+            setUser({ token: data.token, ...data.user }); // Đặt thông tin người dùng vào context
             router.push("/admin");
-            setMessage("Login successful");
+            setMessage("Đăng nhập thành công");
         } else {
-            setMessage(data.message || "Login failed");
+            setMessage(data.message || "Đăng nhập thất bại");
         }
     };
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-3xl font-bold mb-4">Login</h1>
+            <h1 className="text-3xl font-bold mb-4">Đăng nhập</h1>
             <input
                 className="border p-2 mb-4"
                 placeholder="Email"
@@ -49,7 +49,7 @@ export default function Login() {
             />
             <input
                 className="border p-2 mb-4"
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -61,7 +61,7 @@ export default function Login() {
                 onClick={handleLogin}
                 className="bg-blue-500 text-white p-2 rounded"
             >
-                Login
+                Đăng nhập
             </button>
         </div>
     );

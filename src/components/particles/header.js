@@ -13,7 +13,7 @@ export default function Header() {
 
     const handleLogout = () => {
         logout();
-        router.push("/"); // Redirect to home page after logout
+        router.push("/"); // Chuyển hướng về trang chủ sau khi đăng xuất
     };
 
     return (
@@ -21,19 +21,19 @@ export default function Header() {
             <div className="container mx-auto flex items-center justify-between py-4 px-4">
                 {/* Logo */}
                 <div className="text-xl font-bold">
-                    <a href="#">E-Bike Store</a>
+                    <a href="#">Cửa Hàng E-Bike</a>
                 </div>
 
-                {/* Search Bar */}
+                {/* Thanh Tìm Kiếm */}
                 <div className="flex-1 mx-4">
                     <input
                         type="text"
-                        placeholder="Search products..."
+                        placeholder="Tìm sản phẩm..."
                         className="w-full border rounded-lg p-2"
                     />
                 </div>
 
-                {/* Right Side - Sign In/Up and Cart */}
+                {/* Phía Bên Phải - Đăng Nhập/Đăng Ký và Giỏ Hàng */}
                 <div className="flex items-center space-x-4">
                     {user ? (
                         <>
@@ -44,12 +44,12 @@ export default function Header() {
                                 onClick={handleLogout}
                                 className="text-sm font-medium"
                             >
-                                Logout
+                                Đăng Xuất
                             </button>
                         </>
                     ) : (
                         <a href="/register" className="text-sm font-medium">
-                            Sign In / Sign Up
+                            Đăng Nhập / Đăng Ký
                         </a>
                     )}
                     <Link href={"/cart"} className="relative">
@@ -61,20 +61,20 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Navigation Menu */}
+            {/* Menu Điều Hướng */}
             <nav className="bg-gray-200">
                 <div className="container mx-auto flex space-x-4 py-2 px-4">
                     <a href="#" className="hover:text-blue-500">
-                        Home
+                        Trang Chủ
                     </a>
                     <a href="#" className="hover:text-blue-500">
-                        Products
+                        Sản Phẩm
                     </a>
                     <a href="#" className="hover:text-blue-500">
-                        About Us
+                        Về Chúng Tôi
                     </a>
                     <a href="#" className="hover:text-blue-500">
-                        Contact
+                        Liên Hệ
                     </a>
                 </div>
             </nav>
