@@ -1,15 +1,8 @@
 // pages/cart.js
 import MainLayout from "@/components/layouts/MainLayout";
 import { useCart } from "@/contexts/CartContext";
+import { formatPrice } from "@/utils/helper";
 import { useState } from "react"; // Import useState for managing messages
-
-// Helper function to format prices
-const formatPrice = (price) => {
-    return price.toLocaleString("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    });
-};
 
 const Cart = () => {
     const { cart, removeFromCart } = useCart();

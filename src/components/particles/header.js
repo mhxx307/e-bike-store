@@ -21,7 +21,7 @@ export default function Header() {
             <div className="container mx-auto flex items-center justify-between py-4 px-4">
                 {/* Logo */}
                 <div className="text-xl font-bold">
-                    <a href="#">Cửa Hàng E-Bike</a>
+                    <a href="#">TTP E-Bike</a>
                 </div>
 
                 {/* Thanh Tìm Kiếm */}
