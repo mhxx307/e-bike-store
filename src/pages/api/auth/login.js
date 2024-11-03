@@ -16,8 +16,6 @@ export default async function handler(req, res) {
             // Check if the user exists
             const user = await User.findOne({ email });
 
-            console.log("user: ", user);
-
             if (!user) {
                 return res
                     .status(400)

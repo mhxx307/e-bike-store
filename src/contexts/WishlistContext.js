@@ -11,8 +11,6 @@ export const WishlistProvider = ({ children }) => {
     const { user } = useAuth();
     const [wishlist, setWishlist] = useState([]);
 
-    console.log("user", user);
-
     useEffect(() => {
         if (user) {
             // Fetch the user's wishlist from the server

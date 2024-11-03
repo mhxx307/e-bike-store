@@ -41,21 +41,21 @@ function ProductCard({ product }) {
             <div className="mb-4 space-x-2">
                 <Link
                     href={`/products/${product._id}`}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded"
+                    className="bg-yellow-500 text-white px-4 py-2 rounded text-sm"
                 >
                     Chi tiết
                 </Link>
 
                 <Link
                     href={"/contact-payment"}
-                    className="bg-green-500 text-white px-4 py-2 rounded"
+                    className="bg-green-500 text-white px-4 py-2 rounded text-sm"
                 >
                     Liên hệ
                 </Link>
 
                 <Link
                     href={"/contact-payment"}
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    className="bg-blue-500 text-white px-4 py-2 rounded text-sm"
                 >
                     Mua hàng
                 </Link>

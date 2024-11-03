@@ -1,16 +1,33 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function ProductDetail({ product }) {
+export default function ProductDetail() {
     const router = useRouter();
-    const [mainImage, setMainImage] = useState(product.images[0]);
+    const { id } = router.query;
+    const [product, setProduct] = useState(null);
+    const [mainImage, setMainImage] = useState("");
     const { addToWishlist, removeFromWishlist, wishlist } = useWishlist();
 
-    if (router.isFallback) {
-        return <div className="text-center py-20">Loading...</div>;
-    }
+    useEffect(() => {
+        if (product) {
+            setMainImage(product.images[0]);
+        }
+    }, [product]);
+
+    useEffect(() => {
+        if (id) {
+            fetch(`/api/products/${id}`)
+                .then((res) => res.json())
+                .then((data) => setProduct(data))
+                .catch((error) =>
+                    console.error("Error fetching product:", error)
+                );
+        }
+    }, [id]);
+
+    if (!product) return <div>Loading...</div>;
 
     const isInWishlist = wishlist.some((item) => item._id === product._id);
 
@@ -65,7 +82,7 @@ export default function ProductDetail({ product }) {
 
                 {/* Specifications Section */}
                 <h2 className="text-2xl font-semibold text-gray-800 mt-10 mb-4">
-                    Thông so
+                    Thông số
                 </h2>
                 <ul className="list-disc pl-5 space-y-1 text-gray-700">
                     {product.specifications.map((spec, index) => (
@@ -98,40 +115,4 @@ export default function ProductDetail({ product }) {
             </div>
         </MainLayout>
     );
-}
-
-// This function gets called at build time
-export async function getStaticPaths() {
-    // Fetch the list of products from your API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
-    const products = await res.json();
-
-    // Generate paths for each product
-    const paths = products.map((product) => ({
-        params: { id: product._id.toString() },
-    }));
-
-    return { paths, fallback: true }; // Enable fallback to show loading state for new products
-}
-
-// This function gets called at build time for each product
-export async function getStaticProps({ params }) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/products/${params.id}`
-    );
-    const product = await res.json();
-
-    // If the product does not exist, return a 404 status
-    if (!product) {
-        return {
-            notFound: true,
-        };
-    }
-
-    return {
-        props: {
-            product,
-        },
-        revalidate: 60, // Optional: Revalidate the page at most once every minute
-    };
 }
