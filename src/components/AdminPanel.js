@@ -25,6 +25,7 @@ const AdminPanel = () => {
     const [specification, setSpecification] = useState({ name: "", value: "" });
     const [isProductTypeDialogOpen, setProductTypeDialogOpen] = useState(false); // Toggle for product type modal
     const [isProductFormOpen, setProductFormOpen] = useState(false); // Toggle for product form modal
+    const [imageFiles, setImageFiles] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]);
 
     useEffect(() => {
@@ -51,9 +52,17 @@ const AdminPanel = () => {
         setSpecification({ name: "", value: "" });
     };
 
-    const handleImageUpload = async (event) => {
-        const files = event.target.files;
-        const fileReaders = Array.from(files).map((file) => {
+    const handleFileChange = (event) => {
+        const files = Array.from(event.target.files);
+        setImageFiles(files);
+        // Generate previews for UI display
+        const previews = files.map((file) => URL.createObjectURL(file));
+        setImagePreviews(previews);
+    };
+
+    const handleCreateProduct = async () => {
+        // Convert images to base64
+        const fileReaders = imageFiles.map((file) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             return new Promise((resolve) => {
@@ -63,29 +72,32 @@ const AdminPanel = () => {
 
         const images = await Promise.all(fileReaders);
 
-        // Send all images to the API at once
-        const response = await fetch("/api/upload", {
+        // Upload images and create product
+        const token = localStorage.getItem("token");
+        const uploadResponse = await fetch("/api/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ images }),
         });
-        const data = await response.json();
 
-        // Update state with URLs of uploaded images
-        setNewProduct({ ...newProduct, images: data.urls });
-        setImagePreviews(data.urls); // Preview the uploaded images
-    };
+        const uploadData = await uploadResponse.json();
+        if (!uploadResponse.ok) {
+            alert("Image upload failed");
+            return;
+        }
 
-    const handleCreateProduct = async () => {
-        const token = localStorage.getItem("token"); // Get the token from localStorage
         const response = await fetch("/api/products/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(newProduct),
+            body: JSON.stringify({
+                ...newProduct,
+                images: uploadData.urls,
+            }),
         });
+
         const data = await response.json();
         if (response.ok) {
             setProducts([...products, data.product]);
@@ -98,7 +110,8 @@ const AdminPanel = () => {
                 productType: "",
             });
             setImagePreviews([]);
-            setProductFormOpen(false); // Close the modal after creating product
+            setImageFiles([]);
+            setProductFormOpen(false);
         } else {
             alert(data.message);
         }
@@ -281,20 +294,22 @@ const AdminPanel = () => {
                                 type="file"
                                 accept="image/*"
                                 multiple
-                                onChange={handleImageUpload}
+                                onChange={handleFileChange}
                                 className="border border-gray-300 p-2 rounded-md"
                             />
+
+                            {/* Preview Selected Images */}
                             <div className="flex mt-2 space-x-2">
                                 {imagePreviews.map((url, index) => (
-                                    <CldImage
+                                    <img
                                         key={index}
                                         src={url}
                                         alt={`Product Image Preview ${
                                             index + 1
                                         }`}
+                                        className="rounded-md"
                                         width={100}
                                         height={100}
-                                        className="rounded-md"
                                     />
                                 ))}
                             </div>

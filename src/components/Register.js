@@ -1,5 +1,6 @@
 // components/Register.js
 import { useAuth } from "@/contexts/UserContext";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -57,8 +58,12 @@ export default function Register() {
                 onClick={handleRegister}
                 className="bg-blue-500 text-white p-2 rounded"
             >
-                Register
+                Đăng ký
             </button>
+
+            <Link href={"/login"} className="mt-4">
+                Đăng nhập
+            </Link>
         </div>
     );
 }

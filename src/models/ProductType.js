@@ -6,6 +6,8 @@ const ProductTypeSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-module.exports =
+// Ensure proper export
+const ProductType =
     mongoose.models.ProductType ||
     mongoose.model("ProductType", ProductTypeSchema);
+export default ProductType;

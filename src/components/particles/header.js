@@ -1,6 +1,7 @@
 // components/Header.js
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/UserContext";
+import { useWishlist } from "@/contexts/WishlistContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaShoppingCart } from "react-icons/fa";
@@ -8,8 +9,10 @@ import { FaShoppingCart } from "react-icons/fa";
 export default function Header() {
     const { user, logout } = useAuth();
     const router = useRouter();
-    const { cart } = useCart();
-    const totalItems = cart.reduce((sum, product) => sum + product.quantity, 0);
+    // const { cart } = useCart();
+    // const totalItems = cart.reduce((sum, product) => sum + product.quantity, 0);
+    const { wishlist } = useWishlist();
+    const totalItems = wishlist.length;
 
     const handleLogout = () => {
         logout();
@@ -21,7 +24,7 @@ export default function Header() {
             <div className="container mx-auto flex items-center justify-between py-4 px-4">
                 {/* Logo */}
                 <div className="text-xl font-bold">
-                    <a href="#">TTP E-Bike</a>
+                    <a href="/">TTP E-Bike</a>
                 </div>
 
                 {/* Thanh Tìm Kiếm */}
@@ -52,7 +55,7 @@ export default function Header() {
                             Đăng Nhập / Đăng Ký
                         </a>
                     )}
-                    <Link href={"/cart"} className="relative">
+                    <Link href={"/wishlist"} className="relative">
                         <FaShoppingCart className="text-xl" />
                         <span className="absolute top-0 right-0 text-xs bg-red-600 text-white rounded-full px-1">
                             {totalItems}
@@ -64,16 +67,16 @@ export default function Header() {
             {/* Menu Điều Hướng */}
             <nav className="bg-gray-200">
                 <div className="container mx-auto flex space-x-4 py-2 px-4">
-                    <a href="#" className="hover:text-blue-500">
+                    <a href="/" className="hover:text-blue-500">
                         Trang Chủ
                     </a>
-                    <a href="#" className="hover:text-blue-500">
+                    <a href="/products" className="hover:text-blue-500">
                         Sản Phẩm
                     </a>
-                    <a href="#" className="hover:text-blue-500">
+                    <a href="/about" className="hover:text-blue-500">
                         Về Chúng Tôi
                     </a>
-                    <a href="#" className="hover:text-blue-500">
+                    <a href="/contact" className="hover:text-blue-500">
                         Liên Hệ
                     </a>
                 </div>

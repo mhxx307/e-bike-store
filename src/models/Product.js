@@ -1,5 +1,6 @@
 // models/Product.js
 import mongoose from "mongoose";
+import ProductType from "./ProductType"; // Make sure this path is correct
 
 const ProductSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -20,5 +21,7 @@ const ProductSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-module.exports =
+// Ensure proper export
+const Product =
     mongoose.models.Product || mongoose.model("Product", ProductSchema);
+export default Product;

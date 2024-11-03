@@ -13,7 +13,7 @@ export default authenticate(async function handler(req, res) {
             name,
             price,
             description,
-            imageUrl,
+            images,
             specifications,
             productType,
         } = req.body;
@@ -23,7 +23,7 @@ export default authenticate(async function handler(req, res) {
                 name,
                 price,
                 description,
-                imageUrl,
+                images,
                 specifications, // Include specifications
                 productType, // Include product type
             });
