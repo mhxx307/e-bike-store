@@ -9,10 +9,24 @@ export default authenticate(async function handler(req, res) {
     await connectDB();
 
     if (method === "POST") {
-        const { name, price, description, imageUrl } = req.body;
+        const {
+            name,
+            price,
+            description,
+            imageUrl,
+            specifications,
+            productType,
+        } = req.body;
 
         try {
-            const product = new Product({ name, price, description, imageUrl });
+            const product = new Product({
+                name,
+                price,
+                description,
+                imageUrl,
+                specifications, // Include specifications
+                productType, // Include product type
+            });
             await product.save();
             res.status(201).json({ product });
         } catch (error) {
